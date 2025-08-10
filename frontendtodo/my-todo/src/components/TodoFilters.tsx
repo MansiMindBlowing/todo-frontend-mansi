@@ -28,9 +28,10 @@ const ToDoFilters: React.FC<Filters> = ({ searchQuery, onSearchChange, statusFil
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none"
                 >
                     <option value="">Filter by Status</option>
-                    <option value="To-do">To-do</option>
-                    <option value="In-progress">In-progress</option>
-                    <option value="Completed">Completed</option>
+                    <option value="todo">todo</option>
+                    <option value="in-progress">in-progress</option>
+                    <option value="done">done</option>
+                    <option value="will-not-do">will-not-do</option>
                 </select>
                 <select
                     value={priorityFilter}
@@ -38,9 +39,9 @@ const ToDoFilters: React.FC<Filters> = ({ searchQuery, onSearchChange, statusFil
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none"
                 >
                     <option value="">Filter by Priority</option>
-                    <option value="Low">Low</option>
-                    <option value="Medium">Medium</option>
-                    <option value="High">High</option>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
                 </select>
             </div>
 
