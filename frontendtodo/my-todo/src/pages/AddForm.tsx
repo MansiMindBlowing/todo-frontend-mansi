@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTodo } from '../features/todo/todoSlice';
 import type { Todo } from '../features/todo/todoSlice';
-import type { RootState } from "../redux/store"; // Import RootState to access the store
+import type { RootState } from "../redux/store"; 
 import Button from '../../constants/Button';
 
 
@@ -12,7 +12,7 @@ interface TaskFormProps {
 
 const AddForm: React.FC<TaskFormProps> = ({ onCancel }) => {
     const dispatch = useDispatch();
-    const token = useSelector((state: RootState) => state.auth.token); // Get the token from the store
+    const token = useSelector((state: RootState) => state.auth.token);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [priority, setPriority] = useState('');
@@ -31,7 +31,7 @@ const AddForm: React.FC<TaskFormProps> = ({ onCancel }) => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`, // Pass the token here
+                    "Authorization": `Bearer ${token}`, 
                 },
                 body: JSON.stringify({
                     title,

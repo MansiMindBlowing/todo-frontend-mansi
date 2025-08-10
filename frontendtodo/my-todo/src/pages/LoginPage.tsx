@@ -88,7 +88,7 @@ const LoginPage = () => {
                         <div className="relative">
                             <Input
                                 label="Password"
-                                // type={showPassword ? 'text' : 'password'}
+                               
                                 name="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
@@ -100,7 +100,7 @@ const LoginPage = () => {
                                 className="absolute right-3 top-9 text-gray-400 hover:text-gray-600"
                             // onClick={() => setShowPassword(!showPassword)}
                             >
-                                {/* {showPassword ? <FaEyeSlash /> : <FaEye />} */}
+                              
                             </button>
                         </div>
 

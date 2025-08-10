@@ -10,6 +10,7 @@ import Modal from "../components/Modal";
 import Button from "../../constants/Button";
 import AddForm from "./AddForm";
 import ToDoFilters from "../components/TodoFilters";
+import Navbar from "../components/Nabvar";
 
 
 
@@ -93,8 +94,13 @@ const TodoDetails = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 font-inter text-gray-800 p-8">
+    
+    <>
+    <Navbar/>
+      <div className="min-h-screen bg-gray-100 font-inter text-gray-800 p-8">
+    
       <div className="max-w-5xl ">
+        
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">My Todos</h1>
           <Button onClick={() => setIsAddModalOpen(true)} className="flex items-center space-x-2">
@@ -163,6 +169,8 @@ const TodoDetails = () => {
         </Modal>
       </div>
     </div>
+    </>
+  
   );
 };
 
