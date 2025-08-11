@@ -11,6 +11,7 @@ import Button from "../../constants/Button";
 import AddForm from "./AddForm";
 import ToDoFilters from "../components/TodoFilters";
 import Navbar from "../components/Nabvar";
+import ToDoItem from "../components/TodoItems";
 
 
 
@@ -96,10 +97,14 @@ const TodoDetails = () => {
   return (
     
     <>
-    <Navbar/>
-      <div className="min-h-screen bg-gray-100 font-inter text-gray-800 p-8">
+     <Navbar/>
+       <div className="min-h-screen bg-gray-100 font-inter text-gray-800">
+        
+      
+   
+      <div className="min-h-screen bg-gray-100 font-inter text-gray-800 p-8 ">
     
-      <div className="max-w-5xl ">
+      <div className="p-10">
         
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">My Todos</h1>
@@ -121,24 +126,29 @@ const TodoDetails = () => {
         {!loading && todos.length > 0 ? (
           <div className="flex flex-col gap-3 ">
             {todos.map((todo) => (
-              <div key={todo.id} className="w-full p-3 bg-white rounded-lg shadow">
-                <h3 className="text-lg font-bold">{todo.title}</h3>
-                <p className="text-gray-600">{todo.desc}</p>
-                <div className="flex justify-between text-sm text-gray-500 mt-2">
-                  <span>Status: {todo.status}</span>
-                  <span>Priority: {todo.priority}</span>
+              // <div key={todo.id} className="w-full p-3 bg-white rounded-lg shadow">
+              //   <h3 className="text-lg font-bold">{todo.title}</h3>
+              //   <p className="text-gray-600">{todo.desc}</p>
+              //   <div className="flex justify-between text-sm text-gray-500 mt-2">
+              //     <span>Status: {todo.status}</span>
+              //     <span>Priority: {todo.priority}</span>
 
-                </div>
-                <div className="mt-4 flex justify-end space-x-2">
-                  <button onClick={() => { setSelectedTodo(todo); setIsEditModalOpen(true) }}> <MdEdit />
-                  </button>
-                  <button onClick={() => {
-                    setSelectedTodo(todo); setIsDeleteModalOpen(true);
-                  }}>
-                    <FaDeleteLeft />
-                  </button>
-                </div>
-              </div>
+              //   </div>
+              //   <div className="mt-4 flex justify-end space-x-2">
+              //     <button onClick={() => { setSelectedTodo(todo); setIsEditModalOpen(true) }}> <MdEdit />
+              //     </button>
+              //     <button onClick={() => {
+              //       setSelectedTodo(todo); setIsDeleteModalOpen(true);
+              //     }}>
+              //       <FaDeleteLeft />
+              //     </button>
+              //   </div>
+              // </div>
+              <ToDoItem
+              key={todo.id}
+              todo={todo}
+              onEdit={()=>{setSelectedTodo(todo); setIsAddModalOpen(true)}} 
+              onDelete={()=>{setSelectedTodo(todo); setIsDeleteModalOpen(true)}}/>
             ))}
           </div>
         ) : (
@@ -169,6 +179,8 @@ const TodoDetails = () => {
         </Modal>
       </div>
     </div>
+
+     </div>
     </>
   
   );
