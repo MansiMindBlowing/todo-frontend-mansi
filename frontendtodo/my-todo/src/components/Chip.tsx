@@ -2,11 +2,12 @@ interface ChipProps {
     label: string;
     color: string;
     value: string;
-    options: string;
+    // options: string;
+    options: { label: string; value: string }[]
      onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const Chip: React.FC<ChipProps> = ({label, color, options, value, onChange})=>{
+const Chip: React.FC<ChipProps> = ({ color, options, value, onChange})=>{
 
     let chipClasses = '';
 

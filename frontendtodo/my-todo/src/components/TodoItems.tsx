@@ -15,7 +15,7 @@ interface ToDoItemProps {
     onUpdate: (id: string, updateData: { [key: string]: any }) => void;
 }
 
-const ToDoItem: React.FC<ToDoItemProps> = ({ todo, onEdit, onDelete, onUpdate }) => {
+const ToDoItem: React.FC<ToDoItemProps> = ({ todo, onEdit, onDelete, onUpdate}) => {
 
     const statusOptions = [
         { label: 'todo', value: 'todo' },
@@ -57,9 +57,9 @@ const ToDoItem: React.FC<ToDoItemProps> = ({ todo, onEdit, onDelete, onUpdate })
                 </div>
                 <div className="flex justify-end space-x-2">
                     <button onClick={onEdit} className="text-indigo-600 hover:text-indigo-800">
-                        <MdEdit size={20} />
+                        <MdEdit size={20} className="text-indigo-600 hover:text-indigo-800" />
                     </button>
-                    <button onClick={onDelete} className="text-red-600 hover:text-red-800">
+                    <button onClick={onDelete} >
                         <FaDeleteLeft size={20} />
                     </button>
                 </div>

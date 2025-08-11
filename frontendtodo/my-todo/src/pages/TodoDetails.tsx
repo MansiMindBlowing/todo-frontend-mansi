@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import type { RootState, AppDispatch } from "../redux/store";
 import { fetchTodosStart, fetchTodosSuccess, fetchTodosFailure, type Todo, deleteTodo } from "../features/todo/todoSlice";
 // import { FaEdit, FaTrash } from "react-icons/fa";
-import { FaDeleteLeft } from "react-icons/fa6";
-import { MdEdit } from "react-icons/md";
+// import { FaDeleteLeft } from "react-icons/fa6";
+// import { MdEdit } from "react-icons/md";
 import {updateTodo} from '../features/todo/todoSlice'
 
 import Modal from "../components/Modal";
@@ -39,7 +39,7 @@ const TodoDetails = () => {
         //   : "http://localhost:3000/api/todos";
 
         const params = new URLSearchParams();
-        if (searchQuery) params.append('search', searchQuery);
+        if (searchQuery) params.append('title', searchQuery);
         if (statusFilter) params.append('status', statusFilter);
         if (priorityFilter) params.append('priority', priorityFilter);
 
@@ -95,29 +95,34 @@ const TodoDetails = () => {
     }
   };
 
-  const handleUpdateTodo = async (id: string, updateData: { [key: string]: any }) => {
-    if (!token) return;
 
-    try {
-      const response = await fetch(`http://localhost:3000/api/todos/${id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(updateData),
-      });
+    const handleUpdateTodo = async (id: string, updatedData: Partial<Todo>) => {
+        
+        if (!token) {
+            return;
+        }
 
-      if (!response.ok) {
-        throw new Error("Failed to update todo");
-      }
+        try {
+           
+            const response = await fetch(`http://localhost:3000/api/todos/${id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+                body: JSON.stringify(updatedData),
+            });
 
-     
-      dispatch(updateTodo({ id, updateData }));
-    } catch (error) {
-      console.error("Failed to update task:", error);
-    }
-  };
+            if (!response.ok) {
+                throw new Error('Failed to update task.');
+            }
+
+            dispatch(updateTodo({ id: id, updatedData: updatedData }));
+
+        } catch (error) {
+            console.error('Failed to update task:', error);
+        }
+    };
 
   return (
     

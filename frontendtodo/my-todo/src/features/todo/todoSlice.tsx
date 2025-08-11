@@ -59,11 +59,14 @@ const todoSlice = createSlice({
             state.todos.push(action.payload);
         },
 
-        updateTodo: (state, action: PayloadAction<Todo>) => {
-            const updatedTodo = action.payload;
-            const index = state.todos.findIndex(todo => todo.id === updatedTodo.id);
+    
+
+          updateTodo: (state, action: PayloadAction<{ id: string, updatedData: Partial<Todo> }>) => {
+            const { id, updatedData } = action.payload;
+            const index = state.todos.findIndex(todo => todo.id === id);
             if (index !== -1) {
-                state.todos[index] = updatedTodo;
+              
+                state.todos[index] = { ...state.todos[index], ...updatedData };
             }
         },
     },

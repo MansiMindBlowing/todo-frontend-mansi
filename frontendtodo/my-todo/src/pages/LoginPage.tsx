@@ -106,7 +106,8 @@ const LoginPage = () => {
 
 
                         <Button
-                            className='primary'
+                            // className='primary'
+                            primary={true}
                         >
                             Login
                         </Button>
