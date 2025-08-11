@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import type { RootState } from "../redux/store";
-
+import {toast} from "react-toastify";
 interface invitePageProps {
     onCancel: () => void;
 }
@@ -36,11 +36,13 @@ const InvitePage: React.FC<invitePageProps> = ({ onCancel }) => {
                 },
                 body: JSON.stringify(formData),
             });
-
+            
+            toast.success("Email sent successfully!")
             if (!response.ok) {
-                throw new Error("failed to create user")
+                toast.error("Failed to sent invitation")
+                throw new Error("failed to invite user")
             }
-            console.log("user created yeahhhh!!");
+            console.log("user invited yeahhhh!!");
 
         } catch (error) {
             console.error("error in creating user", error);
@@ -53,7 +55,7 @@ const InvitePage: React.FC<invitePageProps> = ({ onCancel }) => {
             <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
                 <input type="text" id="name" name="name" value={formData.name} onChange={handeChange} required
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+                    className="mt-1 p-3 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
             </div>
 
             <div>
@@ -65,7 +67,7 @@ const InvitePage: React.FC<invitePageProps> = ({ onCancel }) => {
                     value={formData.email}
                     onChange={handeChange}
                     required
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                    className="mt-1 p-3 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                 />
             </div>
 
@@ -76,7 +78,7 @@ const InvitePage: React.FC<invitePageProps> = ({ onCancel }) => {
                     name="role"
                     value={formData.role}
                     onChange={handeChange}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                    className="mt-1 p-3 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                 >
                     <option value="user">User</option>
                     <option value="admin">Admin</option>
@@ -84,11 +86,11 @@ const InvitePage: React.FC<invitePageProps> = ({ onCancel }) => {
             </div>
 
             <div className="flex justify-end space-x-2">
-                <button type="button" onClick={onCancel} className="bg-gray-300 hover:bg-gray-400 text-gray-800">
+                <button type="button" onClick={onCancel} className="bg-gray-300 hover:bg-gray-400 text-gray-800 cursor-pointer p-5 rounded-xl">
                     Cancel
                 </button>
 
-                <button type="submit" className="bg-indigo-600 hover:bg-indigo-700 text-white">
+                <button type="submit" className="bg-indigo-600 hover:bg-indigo-700 text-white cursor-pointer p-5 rounded-xl">
                     Create User
                 </button>
 

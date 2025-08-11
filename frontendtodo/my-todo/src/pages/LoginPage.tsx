@@ -88,7 +88,7 @@ const LoginPage = () => {
                         <div className="relative">
                             <Input
                                 label="Password"
-                               
+                                type = "password"
                                 name="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
@@ -107,7 +107,8 @@ const LoginPage = () => {
 
                         <Button
                             // className='primary'
-                            primary={true}
+                            // primary={true}
+                            className="bg-blue-800 text-white px-10 rounded-xl cursor-pointer"
                         >
                             Login
                         </Button>

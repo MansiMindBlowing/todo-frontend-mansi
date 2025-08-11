@@ -144,18 +144,18 @@ const TodoDetails = () => {
 
     <>
       <Navbar />
-      <div className="min-h-screen bg-gray-100 font-inter text-gray-800">
+      <div className="min-h-screen bg-gray-50 font-inter text-gray-800">
 
 
 
         <div className="min-h-screen bg-gray-100 font-inter text-gray-800 p-8 ">
 
-          <div className="p-10">
+          <div className="px-30 py-10">
 
             <div className="flex justify-between items-center mb-8">
               <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">My Todos</h1>
-              <Button onClick={() => setIsAddModalOpen(true)} className="flex items-center space-x-2">
-                <span>➕</span>
+              <Button onClick={() => setIsAddModalOpen(true)} className="flex items-center space-x-2 bg-blue-800 text-white" >
+                <span className="text-2xl">+</span>
                 <span>Add Todo</span>
               </Button>
             </div>
@@ -244,7 +244,7 @@ const TodoDetails = () => {
               <p className="text-gray-700 mb-4">Are you sure you want to delete the task: <span className="font-semibold">{selectedTodo?.title}</span>?</p>
               <div className="flex justify-end space-x-2">
                 <Button onClick={() => { setIsDeleteModalOpen(false); setSelectedTodo(null); }}>
-                  Edit
+                  Cancel
                 </Button>
                 <Button onClick={handleDelete}>
                   Delete

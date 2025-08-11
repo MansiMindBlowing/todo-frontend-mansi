@@ -1,65 +1,104 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTodo } from '../features/todo/todoSlice';
+import { addTodo, updateTodo } from '../features/todo/todoSlice';
 import type { Todo } from '../features/todo/todoSlice';
-import type { RootState } from "../redux/store"; 
+import type { RootState } from "../redux/store";
 import Button from '../../constants/Button';
+// import { MdDescription } from 'react-icons/md';
 
 
 interface TaskFormProps {
     onCancel: () => void;
+    initialData?: Todo | null
 }
 
-const AddForm: React.FC<TaskFormProps> = ({ onCancel }) => {
+const AddForm: React.FC<TaskFormProps> = ({ onCancel, initialData }) => {
     const dispatch = useDispatch();
     const token = useSelector((state: RootState) => state.auth.token);
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [priority, setPriority] = useState('');
-    const [status, setStatus] = useState('');
+    const [title, setTitle] = useState(initialData?.title || '');
+    const [description, setDescription] = useState(initialData?.desc || '');
+    const [priority, setPriority] = useState(initialData?.priority || '');
+    const [status, setStatus] = useState(initialData?.status || '');
+
+    useEffect(() => {
+        if (initialData) {
+            setTitle(initialData.title);
+            setDescription(initialData.desc);
+            setPriority(initialData.priority);
+            setStatus(initialData.status);
+        } else {
+            setTitle('');
+            setDescription('');
+            setPriority('');
+            setStatus('');
+        }
+    }, [initialData]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        
+
         if (!token) {
             console.error("Authentication token is missing. Please log in.");
             return;
         }
 
+        const taskData = {
+            title,
+            desc: description,
+            priority,
+            status
+        };
+
+       
         try {
-            const response = await fetch("http://localhost:3000/api/todos", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`, 
-                },
-                body: JSON.stringify({
-                    title,
-                    desc: description,
-                    priority,
-                    status
-                })
-            });
+            if (initialData) {
 
-            if (!response.ok) {
-                throw new Error("Failed to add todo");
+                const response = await fetch(`http://localhost:3000/api/todos/${initialData.id}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`,
+                    },
+                    body: JSON.stringify(taskData)
+                });
+
+                if (!response.ok) {
+                    throw new Error("Failed to update todo");
+                }
+
+                const updatedTodo: Todo = await response.json();
+                dispatch(updateTodo({ id: updatedTodo.id, updatedData: updatedTodo }));
+            } else {
+
+                const response = await fetch("http://localhost:3000/api/todos", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`,
+                    },
+                    body: JSON.stringify(taskData)
+                });
+
+                if (!response.ok) {
+                    throw new Error("Failed to add todo");
+                }
+
+                const addedTodo: Todo = await response.json();
+                dispatch(addTodo(addedTodo));
             }
-            
-            const addedTodo: Todo = await response.json();
-
-            dispatch(addTodo(addedTodo));
             onCancel();
         } catch (error) {
-            console.error("Failed to add task:", error);
+            console.error(`Failed to ${initialData ? 'update' : 'add'} task:`, error);
         }
     }
+
     return (
         <form onSubmit={handleSubmit} className='space-y-4'>
             <div>
                 <label className='block text-sm font-medium text-gray-700 mb-1'>Title</label>
                 <input
                     type="text"
-                    placeholder='e.g., Create PPT'
+                    placeholder='Add a title....'
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     className='w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:outline-none'
@@ -69,7 +108,7 @@ const AddForm: React.FC<TaskFormProps> = ({ onCancel }) => {
             <div>
                 <label className='block text-sm font-medium text-gray-700 mb-1'>Description</label>
                 <textarea
-                    placeholder='Provide a detailed desc. of the task...'
+                    placeholder='Provide desc....'
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     className='w-full px-4 py-2 border border-gray-300 rounded-md resize-none h-24 focus:ring-2 focus:ring-blue-500 focus:outline-none'
@@ -112,7 +151,7 @@ const AddForm: React.FC<TaskFormProps> = ({ onCancel }) => {
                 </div>
             </div>
             <div className='flex gap-2 justify-end'>
-                <Button type='button'  onClick={onCancel}>
+                <Button type='button' onClick={onCancel}>
                     Cancel
                 </Button>
                 <Button type='submit' >
@@ -122,5 +161,9 @@ const AddForm: React.FC<TaskFormProps> = ({ onCancel }) => {
         </form>
     )
 }
+    
+
+
+
 
 export default AddForm;
