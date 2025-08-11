@@ -69,5 +69,5 @@ const todoSlice = createSlice({
     },
 });
 
-export const { fetchTodosStart, fetchTodosSuccess, fetchTodosFailure, addTodo, deleteTodo } = todoSlice.actions;
+export const { fetchTodosStart, fetchTodosSuccess, fetchTodosFailure, addTodo, deleteTodo, updateTodo } = todoSlice.actions;
 export default todoSlice.reducer;

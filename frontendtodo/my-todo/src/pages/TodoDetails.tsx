@@ -5,6 +5,7 @@ import { fetchTodosStart, fetchTodosSuccess, fetchTodosFailure, type Todo, delet
 // import { FaEdit, FaTrash } from "react-icons/fa";
 import { FaDeleteLeft } from "react-icons/fa6";
 import { MdEdit } from "react-icons/md";
+import {updateTodo} from '../features/todo/todoSlice'
 
 import Modal from "../components/Modal";
 import Button from "../../constants/Button";
@@ -94,6 +95,30 @@ const TodoDetails = () => {
     }
   };
 
+  const handleUpdateTodo = async (id: string, updateData: { [key: string]: any }) => {
+    if (!token) return;
+
+    try {
+      const response = await fetch(`http://localhost:3000/api/todos/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(updateData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update todo");
+      }
+
+     
+      dispatch(updateTodo({ id, updateData }));
+    } catch (error) {
+      console.error("Failed to update task:", error);
+    }
+  };
+
   return (
     
     <>
@@ -148,7 +173,8 @@ const TodoDetails = () => {
               key={todo.id}
               todo={todo}
               onEdit={()=>{setSelectedTodo(todo); setIsAddModalOpen(true)}} 
-              onDelete={()=>{setSelectedTodo(todo); setIsDeleteModalOpen(true)}}/>
+              onDelete={()=>{setSelectedTodo(todo); setIsDeleteModalOpen(true)}}
+              onUpdate={handleUpdateTodo}/>
             ))}
           </div>
         ) : (
